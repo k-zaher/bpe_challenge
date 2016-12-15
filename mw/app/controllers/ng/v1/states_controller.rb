@@ -1,34 +1,34 @@
+# States Controller that inherits from Base
 class Ng::V1::StatesController < Ng::V1::BaseController
-
   before_action :authenticate_admin!
-  before_action :set_state, only:[:update,:destroy]
+  before_action :set_state, only: [:update, :destroy]
 
   def index
-    render json: {states_list: State.ordered}, status: :ok
+    render json: { states_list: State.ordered }, status: :ok
   end
 
   def create
     @state = State.new(state_params)
     if @state.save
-      render json: {state: @state}, status: :ok
+      render json: { state: @state }, status: :ok
     else
-      render json: {message: @state.errors.full_messages}, status: :forbidden
+      render json: { message: @state.errors.full_messages }, status: :forbidden
     end
   end
 
   def update
     if @state.update_attributes(state_params)
-      render json: {state: @state}, status: :ok
+      render json: { state: @state }, status: :ok
     else
-      render json: {message: @state.errors.full_messages}, status: :forbidden
+      render json: { message: @state.errors.full_messages }, status: :forbidden
     end
   end
 
   def destroy
     if @state.destroy
-      render json: {state: @state}, status: :ok
+      render json: { state: @state }, status: :ok
     else
-      render json: {message: @state.errors.full_messages}, status: :forbidden
+      render json: { message: @state.errors.full_messages }, status: :forbidden
     end
   end
 
@@ -56,6 +56,6 @@ class Ng::V1::StatesController < Ng::V1::BaseController
   end
 
   def authenticate_admin!
-    render json: {message:"You are not Authorized to access this page"}, status: :unauthorized  and return if !@current_user.admin?
+    render json: { message: 'You are not Authorized' }, status: :unauthorized and return unless @current_user.admin?
   end
 end

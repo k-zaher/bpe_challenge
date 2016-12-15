@@ -1,7 +1,10 @@
 require 'rails_helper'
-require "base64"
+require 'base64'
 
 RSpec.describe Ng::V1::VehiclesController, type: :controller do
+  let(:user) { User.first }
+  let(:user_auth_data) { Base64.strict_encode64("#{user.email}:test@1234") }
+  let(:vehicle) { Vehicle.first }
 
   context 'GET #index' do
     context 'with no authorization header' do
@@ -13,7 +16,7 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
 
     context 'with invalid authorization header' do
       before(:each) do
-        request.headers.merge!('Authorization' => "Hello")
+        request.headers['Authorization'] = 'hello'
         get :index
       end
       it 'responds successfully HTTP 401 status code' do
@@ -23,9 +26,7 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
 
     context 'with valid authorization header' do
       before(:each) do
-        user = User.first
-        auth_data = Base64.strict_encode64("#{user.email}:test@1234")
-        request.headers.merge!('Authorization' => "Basic #{auth_data}")
+        request.headers['Authorization'] = "Basic #{user_auth_data}"
         get :index
       end
       it 'responds successfully HTTP 200 status code' do
@@ -38,22 +39,19 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
 
   context 'PUT next_state' do
     before(:each) do
-      user = User.first
-      auth_data = Base64.strict_encode64("#{user.email}:test@1234")
-      request.headers.merge!('Authorization' => "Basic #{auth_data}")
-      @vehicle = Vehicle.first
+      request.headers['Authorization'] = "Basic #{user_auth_data}"
     end
 
     it 'changes Designed to Assembled' do
-      put :next_state, params: { id: @vehicle.id}
+      put :next_state, params: { id: vehicle.id }
       expect(response).to be_success
       expect(response).to have_http_status(200)
-      expect(JSON.parse(response.body)["vehicle"]["state_name"]).to eq("Assembled")
+      expect(JSON.parse(response.body)['vehicle']['state_name']).to eq('Assembled')
     end
 
     it 'does not change the last state' do
-      @vehicle.update(state_id: State.ordered.last.id)
-      put :next_state, params: { id: @vehicle.id}
+      vehicle.update(state_id: State.ordered.last.id)
+      put :next_state, params: { id: vehicle.id }
       expect(response).to have_http_status(403)
     end
   end
