@@ -62,7 +62,7 @@ Note: Ng::V1::SessionsController skips authenticate_user
 
 * `bundle`
 * Setup your database.yml
-* `rails db:create; rails db:migrate; rails db:seed`
+* `rails db:setuo db:seed`
 * `rails s`
 
 To run Tests
