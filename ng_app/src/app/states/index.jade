@@ -1,0 +1,25 @@
+.row
+  .pull-right
+    button.btn.btn-primary.admin_dasboard(ng-click="states.goToHome()") Back to Vehicles
+.col-lg-6(ng-init= "states.index()")
+  ul(ui-sortable='states.sortableOptions', ng-model='states.list', class="state_list")
+    li(ng-repeat='stateItem in states.list', class="stateItem")
+      {{ stateItem.name }}
+      | ({{stateItem.vehicles_count}})
+      button(ng-click= "states.showEditForm(stateItem)") Edit
+      button(ng-click= "states.delete(stateItem, $index)") Delete
+  button.btn.btn-primary.updateOrder(ng-click="states.updateOrder()", ng-if="states.orderUpdated") Submit new order
+
+
+.col-lg-6
+  form.form-horizontal(ng_submit='states.create(stateForm)', role='form')
+    h4 New State
+    input#text.form-control(name='name', ng_model='stateForm.name', required='required', type='text', placeholder='Name', autofocus='autofocus')
+    br
+    button.btn.btn-blue(type='submit') Create State
+
+  form.form-horizontal(ng_submit='states.update(states.editForm)', role='form', ng-if="states.editForm")
+    h4 Edit State
+    input#text.form-control(name='name', ng_model='states.editForm.name', required='required', type='text', placeholder='Name', autofocus='autofocus')
+    br
+    button.btn.btn-blue(type='submit') Update State

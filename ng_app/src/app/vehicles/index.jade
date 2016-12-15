@@ -1,0 +1,19 @@
+.row
+  .pull-right
+    button.btn.btn-primary.admin_dasboard(ng-click="vehicles.goToAdmin()") Manage States
+div(ng-init= "vehicles.index()")
+  table.table.table-striped
+    thead
+      tr
+        th Name
+        th Description
+        th State
+        th Action
+    tbody
+      tr(ng-repeat="vehicle in vehicles.list")
+        td {{vehicle.name}}
+        td {{vehicle.desc}}
+        td {{vehicle.state_name}}
+        td
+          button(ng-click="vehicles.completeState(vehicle)") Next State
+
