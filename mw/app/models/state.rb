@@ -6,6 +6,8 @@ class State < ApplicationRecord
 
   before_create :set_order
 
+  after_commit :update_higher_order_states, on: :destroy
+
   def next
     State.find_by_order(self.order + 1) || false
   end
@@ -26,5 +28,18 @@ class State < ApplicationRecord
     super((options || { }).merge({
         :methods => [:vehicles_count]
     }))
+  end
+
+  private
+
+  # Should be moved to a worker
+  def update_higher_order_states
+    higher_states = State.where('states.order > ?', self.order)
+    ActiveRecord::Base.transaction do
+      higher_states.each do |state|
+        state.order -= 1
+        state.save
+      end
+    end
   end
 end
