@@ -10,4 +10,8 @@ class Ng::V1::BaseController < ApplicationController
     email, password = basic.decode_credentials(request).split(':')
     render status: :unauthorized and return unless (@current_user = User.authenticated?(email, password))
   end
+
+  def authenticate_admin
+    render json: { message: 'You are not Authorized' }, status: :unauthorized and return unless @current_user.admin?
+  end
 end

@@ -45,4 +45,4 @@ VehicleBYModel = ['BMW 328i', 'Audi A5',
   puts "Created vehicle #{vehicle.name} with id: #{vehicle.id}"
 end
 
-# puts "Seed Done #{'*' * 100}"
+puts "Seed Done #{'*' * 100}"

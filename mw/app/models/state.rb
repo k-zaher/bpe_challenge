@@ -12,6 +12,18 @@ class State < ApplicationRecord
 
   delegate :count, to: :vehicles, prefix: true
 
+  def self.bulk_order_update(sorted_hash)
+    states_ids = sorted_hash.keys
+    ActiveRecord::Base.transaction do
+      states = State.where(id: states_ids)
+      states.each do |state|
+        state.order = sorted_hash[state.id.to_s]
+        state.save
+      end
+    end
+    true
+  end
+
   def next
     State.find_by(order: order + 1) || false
   end
@@ -21,6 +33,7 @@ class State < ApplicationRecord
     previous_state = State.ordered.last
     self.order = previous_state.order + 1 if previous_state
   end
+
 
   def as_json(options = {})
     super(options.merge(methods: [:vehicles_count]))
