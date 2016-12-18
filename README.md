@@ -1,7 +1,7 @@
 # BPE Challenge
 The Project consists of a rails API app (MW) and an angular app that consumes the API provided by the MW
 
-## Database Structure
+## Model Structure
 The MW app consists of three models:
 
 * User
@@ -92,7 +92,9 @@ Just run `rspec`, it will prepare and seed the test DB
 
 * Serialize the JSON sent to the client using active_model_serializers
 
-* Add option in for the user to logout on the client app
+* Add option for the user to logout on the client app
+
+* Add Pagination 
 
 * Write Unit Tests and increate test coverage
 
