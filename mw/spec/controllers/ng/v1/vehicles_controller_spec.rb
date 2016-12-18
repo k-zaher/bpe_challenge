@@ -11,7 +11,7 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
     context 'with no authorization header' do
       it 'responds successfully HTTP 401 status code' do
         get :index
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(401)
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
         get :index
       end
       it 'responds successfully HTTP 401 status code' do
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(401)
       end
     end
 

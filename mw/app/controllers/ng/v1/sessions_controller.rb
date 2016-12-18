@@ -7,7 +7,7 @@ class Ng::V1::SessionsController < Ng::V1::BaseController
     if (@current_user = User.authenticated?(params[:email], params[:password]))
       render json: { message: 'Authenticated' }, status: :ok and return
     else
-      render_forbidden and return
+      render_unauthorized and return
     end
   end
 

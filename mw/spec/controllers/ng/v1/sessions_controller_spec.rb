@@ -3,16 +3,16 @@ require 'rails_helper'
 RSpec.describe Ng::V1::SessionsController, type: :controller do
   describe 'POST #Create' do
     context 'Email or Password is not provided' do
-      it 'returns bad_request' do
+      it 'returns 400' do
         post :create, params: { email: 'test@test.com' }
         expect(response).to have_http_status(400)
       end
     end
 
     context 'Email or Password is not valid' do
-      it 'returns bad_request' do
+      it 'returns 401' do
         post :create, params: { email: 'test@test.com', password: 'hello' }
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(401)
       end
     end
 
