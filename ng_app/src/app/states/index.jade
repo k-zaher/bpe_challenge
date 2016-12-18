@@ -6,7 +6,7 @@
   ul(ui-sortable='states.sortableOptions', ng-model='states.list', class="state_list")
     li(ng-repeat='stateItem in states.list', class="stateItem")
       {{ stateItem.name }}
-      | ({{stateItem.vehicles_count}})
+      | ({{stateItem.vehicles_length}})
       button(ng-click= "states.showEditForm(stateItem)") Edit
       button(ng-click= "states.delete(stateItem, $index)") Delete
   button.btn.btn-primary.updateOrder(ng-click="states.updateOrder()", ng-if="states.orderUpdated") Submit new order

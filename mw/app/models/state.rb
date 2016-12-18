@@ -10,18 +10,21 @@ class State < ApplicationRecord
 
   after_commit :update_higher_order_states, on: :destroy
 
-  delegate :count, to: :vehicles, prefix: true
+  #
+  # Use .length instead of .count to avoid hitting on the database again
+  # if vehicles is already included
+  #
+  delegate :length, to: :vehicles, prefix: true
 
   def self.bulk_order_update(sorted_hash)
     states_ids = sorted_hash.keys
-    ActiveRecord::Base.transaction do
+    transaction do
       states = State.where(id: states_ids)
       states.each do |state|
         state.order = sorted_hash[state.id.to_s]
         state.save
       end
     end
-    true
   end
 
   def next
@@ -29,14 +32,12 @@ class State < ApplicationRecord
   end
 
   def set_order
-    self.order = 0
     previous_state = State.ordered.last
-    self.order = previous_state.order + 1 if previous_state
+    self.order = previous_state ? previous_state.order + 1 : 0
   end
 
-
   def as_json(options = {})
-    super(options.merge(methods: [:vehicles_count]))
+    super(options.merge(methods: [:vehicles_length]))
   end
 
   private

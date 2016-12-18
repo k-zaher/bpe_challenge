@@ -2,7 +2,7 @@
 class Ng::V1::VehiclesController < Ng::V1::BaseController
   before_action :set_vehicle, only: [:next_state]
   def index
-    render json: Vehicle.all, status: :ok
+    render json: Vehicle.includes(:state), status: :ok
   end
 
   def next_state

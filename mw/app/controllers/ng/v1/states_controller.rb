@@ -4,7 +4,7 @@ class Ng::V1::StatesController < Ng::V1::BaseController
   before_action :set_state, only: [:update, :destroy]
 
   def index
-    render json: { states_list: State.ordered }, status: :ok
+    render json: { states_list: State.ordered.includes(:vehicles) }, status: :ok
   end
 
   def create

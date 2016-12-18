@@ -10,12 +10,11 @@ class User < ApplicationRecord
                     format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ },
                     uniqueness: { case_sensitive: false }
   def password
-    @password ||= Password.new(password_hash)
+    Password.new(password_hash)
   end
 
   def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_hash = @password
+    self.password_hash = Password.create(new_password)
   end
 
   def self.authenticated?(email, password)
