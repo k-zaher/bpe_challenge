@@ -8,10 +8,14 @@ class Ng::V1::BaseController < ApplicationController
   def authenticate_user
     basic = ActionController::HttpAuthentication::Basic
     email, password = basic.decode_credentials(request).split(':')
-    render status: :unauthorized and return unless (@current_user = User.authenticated?(email, password))
+    render_forbidden and return unless (@current_user = User.authenticated?(email, password))
   end
 
   def authenticate_admin
     render json: { message: 'You are not Authorized' }, status: :unauthorized and return unless @current_user.admin?
+  end
+
+  def render_forbidden
+    render json: { error_message: 'Email or Password is invalid' }, status: :forbidden
   end
 end

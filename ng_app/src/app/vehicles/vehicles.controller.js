@@ -19,7 +19,7 @@
     }
 
     vm.completeState = function(vehicle){
-      var confirmRequest = $window.confirm('Are you sure you want to complete the ' + vehicle.state_name + ' State for ' + vehicle.name);
+      var confirmRequest = $window.confirm('Are you sure you want to move the vehicle to the next state ');
       if(confirmRequest){
         Restangular.all('vehicles/' + vehicle.id + "/next_state").customPUT().then(function(result) {
           vehicle.state_name = result.vehicle.state_name

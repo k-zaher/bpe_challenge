@@ -12,7 +12,7 @@ RSpec.describe Ng::V1::SessionsController, type: :controller do
     context 'Email or Password is not valid' do
       it 'returns bad_request' do
         post :create, params: { email: 'test@test.com', password: 'hello' }
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(403)
       end
     end
 

@@ -9,7 +9,7 @@ class Ng::V1::VehiclesController < Ng::V1::BaseController
     if @vehicle.next_state!
       render json: { vehicle: @vehicle }, status: :ok
     else
-      render json: { message: 'Failed to move to next state' }, status: :forbidden
+      render json: { message: 'Failed to move to next state' }, status: :bad_request
     end
   end
 

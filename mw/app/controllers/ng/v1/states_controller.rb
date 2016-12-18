@@ -12,7 +12,7 @@ class Ng::V1::StatesController < Ng::V1::BaseController
     if @state.save
       render json: { state: @state }, status: :ok
     else
-      render json: { message: @state.errors.full_messages }, status: :forbidden
+      render json: { message: @state.errors.full_messages }, status: :bad_request
     end
   end
 
@@ -20,7 +20,7 @@ class Ng::V1::StatesController < Ng::V1::BaseController
     if @state.update_attributes(state_params)
       render json: { state: @state }, status: :ok
     else
-      render json: { message: @state.errors.full_messages }, status: :forbidden
+      render json: { message: @state.errors.full_messages }, status: :bad_request
     end
   end
 
@@ -28,7 +28,7 @@ class Ng::V1::StatesController < Ng::V1::BaseController
     if @state.destroy
       render json: { state: @state }, status: :ok
     else
-      render json: { message: @state.errors.full_messages }, status: :forbidden
+      render json: { message: @state.errors.full_messages }, status: :bad_request
     end
   end
 
@@ -37,7 +37,7 @@ class Ng::V1::StatesController < Ng::V1::BaseController
     if State.bulk_order_update(sorted_hash)
       render status: :ok
     else
-      render status: :forbidden
+      render status: :bad_request
     end
   end
 

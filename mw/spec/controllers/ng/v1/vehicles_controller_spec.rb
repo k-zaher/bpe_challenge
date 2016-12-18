@@ -11,7 +11,7 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
     context 'with no authorization header' do
       it 'responds successfully HTTP 401 status code' do
         get :index
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
+        expect(response).to have_http_status(403)
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
         get :index
       end
       it 'responds successfully HTTP 401 status code' do
-        expect(response.response_code).to eq(Rack::Utils::SYMBOL_TO_STATUS_CODE[:unauthorized])
+        expect(response).to have_http_status(403)
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe Ng::V1::VehiclesController, type: :controller do
         put :next_state, params: { id: vehicle_2.id }
       end
       it 'returns 403' do
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(400)
       end
     end
   end

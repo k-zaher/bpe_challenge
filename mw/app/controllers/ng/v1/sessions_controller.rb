@@ -7,7 +7,7 @@ class Ng::V1::SessionsController < Ng::V1::BaseController
     if (@current_user = User.authenticated?(params[:email], params[:password]))
       render json: { message: 'Authenticated' }, status: :ok and return
     else
-      render_unauthorized and return
+      render_forbidden and return
     end
   end
 
@@ -17,9 +17,5 @@ class Ng::V1::SessionsController < Ng::V1::BaseController
     if !params[:email] || !params[:password]
       render json: { error_message: 'Email and Password are required' }, status: :bad_request
     end
-  end
-
-  def render_unauthorized
-    render json: { error_message: 'Email or Password is invalid' }, status: :unauthorized
   end
 end
