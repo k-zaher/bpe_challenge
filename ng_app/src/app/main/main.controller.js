@@ -6,6 +6,12 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController() {
+  function MainController($scope, $state, AuthenticationService) {
+    var vm = this
+
+    vm.logout = function(){
+      AuthenticationService.ClearCredentials();
+      $state.go("login");
+    }
   }
 })();

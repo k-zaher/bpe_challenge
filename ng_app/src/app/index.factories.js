@@ -1,8 +1,7 @@
 (function(){
   'use strict';
   angular.module('ngApp').factory('AuthenticationService',
-    ['$base64', '$http', '$cookies', '$timeout',
-    function ($base64, $http, $cookies, $timeout) {
+    function ($base64, $http, $cookies) {
         var service = {};
         service.SetCredentials = function (email, password) {
             var authdata = $base64.encode(email + ':' + password);
@@ -14,5 +13,5 @@
             $http.defaults.headers.common['Authorization'] = 'Basic ';
         };
         return service;
-    }])
+    })
 })();
