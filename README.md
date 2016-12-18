@@ -103,7 +103,7 @@ Just run `rspec`, it will prepare and seed the test DB
 
 * **Devise**: The project is too simple to install a heavy gem as Devise, especially that most of its modules as Confirmable, Recoverable and Registerable won't be used.
 
-* **StateMachine gem**: Well I actually used it at the begining but I found that it is build failing and hasn't been supported for some time. I even found a fork that supports rails 5, however I decided to remove it as having dynamic states will require meta-programming and this won't be scalable. It also saves the state in a column as string which will add an overhead while updating the name of the state.
+* **StateMachine gem**: Well I actually used it at the begining but I found that it is build failing and hasn't been supported for some time. I even found a fork that is recently supported, however I decided to remove it as having dynamic states will require MetaProgramming and this will make the code harder to scale and maintain. It also saves the state in a column as string which will add an overhead while updating the name of the state.
 
 
 **Enjoy**
